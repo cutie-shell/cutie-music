@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>icons/icon-m-next.svg</file>
+        <file>icons/icon-m-pause.svg</file>
+        <file>icons/icon-m-play.svg</file>
+        <file>icons/icon-m-previous.svg</file>
+        <file>icons/icon-m-speaker.svg</file>
+        <file>Player.qml</file>
+        <file>icons_black/next_black.png</file>
+        <file>icons_black/next_grey.png</file>
+        <file>icons_black/pause_black.png</file>
+        <file>icons_black/play.png</file>
+        <file>icons_black/previus.png</file>
+        <file>icons/music.png</file>
+        <file>icons_black/icon-m-music.svg</file>
+    </qresource>
+</RCC>
