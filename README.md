@@ -1,4 +1,4 @@
-# Cutie Browser
+# Cutie Music
 The default Music player for Cutie UI.
 
 ## Building and installing
