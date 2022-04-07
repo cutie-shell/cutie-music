@@ -1,7 +1,13 @@
-# Cutie Shell
+# Cutie Browser
+The default Music player for Cutie UI.
 
-You can find more information and installation instructions at our website: [https://cutie-shell.github.io/](https://cutie-shell.github.io)
+## Building and installing
 
-Status: Pre-alpha
+```
+qmake
+make
+sudo make install
+```
 
-Tested on: Volla Phone, Xiaomi Redmi 7, OnePlus 6t
+## Troubleshooting
+None
