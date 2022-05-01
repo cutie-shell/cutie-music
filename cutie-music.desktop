@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Music
+Exec=cutie-music
+TryExec=cutie-music
+Icon=cutie-music
+Terminal=false
+StartupNotify=false

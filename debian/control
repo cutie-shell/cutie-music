@@ -1,0 +1,19 @@
+Source: cutie-music
+Section: libs
+Maintainer: Alexey T <supirlelik96@gmail.com>
+Priority: optional
+Build-Depends: pkg-kde-tools,
+               qt5-qmake,
+               qtbase5-dev,
+               pkg-config,
+               qtdeclarative5-dev,
+                libqt5multimedia5-plugins
+
+Standards-Version: 4.5.1
+
+Package: cutie-music
+Architecture: any
+Multi-Arch: foreign
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}, qml-module-cutie, libqt5multimedia5-plugins
+Description: This package contains Cutie's default music player.
