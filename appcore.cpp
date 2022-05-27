@@ -1,4 +1,5 @@
 #include "appcore.h"
+#include "QStandardPaths"
 #include "QDebug"
 
 
@@ -12,7 +13,9 @@ void AppCore::receiveFromQml()
     // Увеличиваем счётчик и высылаем сигнал с его значением
    // ++m_counter;
    QString path;
-   path = "/home/alex/Музыка/";
+   path = QStandardPaths::writableLocation(QStandardPaths::MusicLocation)+"/";
+   //path += "/Музыка/";
+   qDebug()<<path;
     QDir dirname(path);
     QStringList dir = dirname.entryList();
   int count=0;

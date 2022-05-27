@@ -9,6 +9,7 @@ Rectangle{
     height: view.height
     color: "#00ffffff"
     property  int dpi: 4
+
     Image {
         id: image
         x: 83
@@ -119,6 +120,18 @@ Rectangle{
                     enabled: true
 
                 }
+                PropertyChanges {
+                    target: titleM
+                   opacity: 1
+                    enabled: true
+
+                }
+                PropertyChanges {
+                    target: rectangleM
+                   opacity: 1
+                    enabled: true
+
+                }
             },
             State{
                 name: "unopened"
@@ -130,6 +143,18 @@ Rectangle{
                 PropertyChanges {
                     target: scroll
                       opacity: 0
+                    enabled: false
+
+                }
+                PropertyChanges {
+                    target: titleM
+                   opacity: 0
+                    enabled: false
+
+                }
+                PropertyChanges {
+                    target: rectangleM
+                   opacity: 0
                     enabled: false
 
                 }

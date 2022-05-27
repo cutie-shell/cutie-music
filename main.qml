@@ -12,38 +12,155 @@ CutieWindow{
     width: 400
     height: 800
     visible: true
-    title: qsTr("Scroll")
+    title: qsTr("Music")
     //cutieMusic.onSendString:
-    property  bool debug: false //Debug true or false for release in cutieShell DE
+    property  bool debug: false //Debug true or false for release in cutieShell DE please use false
     property bool playedStatus: false
 
     property  int value: 0
     property  bool btnPlayslate: false
+    property int toMove: 0
+    property int colPlaylist: 0
+    //0 - Null unactvie
+    //1 - true auto
+    //2 - forward false
+    //3 - forward true
+    //4 - back false
+    //5 - back true
     //color: "transparent"
-
+//createPlaylistWindow.slate: "opened"
 
 
     ///    searchMusic()
 
+   /* Image {
+        id: bug
+        width: 0
+        height: 0
+        source: "file:/usr/share/atmospheres/air/wallpaper.jpg"
+        sourceSize.height: 1080
+        sourceSize.width: 1920
+        fillMode: Image.PreserveAspectCrop
+
+        smooth: true
+        visible: false
+        anchors.fill: parent
+    }
+
+
+    FastBlur {
+        source: bug
+        radius: 32
+        anchors.fill: parent
+    }
+
+*/
+
     Connections {
-          target: cutieMusic
+        target: cutieMusic
 
-         onSendString: {
-          playlistModel.append( { "path" : current_line, } )
-          }
-      }
-
-
+        onSendString: {
+            playlistModel.append( { "path" : current_line, } )
+        }
+    }
 
 
-    FolderListModel{
-        id: listmusic
-        folder: "file:///home/alex/Музыка"
-                   showDirs: false
-                  // showDotAndDotDot: false
-                   nameFilters: ["*.mp3"]
+
+
+/*
+
+    ListModel {
+                  id: playlistsModel
+
+
 
     }
+
+
+    ScrollView {
+          id: frame
+          clip: true
+
+          //other properties
+         // ScrollBar.horizontal.policy: ScrollBar.AlwaysOn
+          anchors.left: parent.left
+          anchors.right: parent.right
+          anchors.top: parent.top
+          anchors.bottom: scroll.top
+          anchors.rightMargin: 0
+          anchors.leftMargin: 0
+          anchors.topMargin: 0
+                    anchors.bottomMargin: 6
+          Flickable {
+              contentWidth: colPlaylist *96
+              height: 96
+
+
+
+
+
+
+
+    GridView {
+         anchors.fill: parent
+                  model: playlistsModel
+                  cellWidth: 96
+                  cellHeight: 96
+                  clip: true
+
+                  delegate: Item {
+                      width: view.width / 3 - 15 * shellScaleFactor
+                      height: view.width / 3 - 15 * shellScaleFactor
+                      Rectangle {
+                          id: modelplaylist
+                          x: 8
+                          y: 8
+                          width: 89
+                          height: 89
+                          color: "#87ffffff"
+
+                          Label {
+                              id: text1
+                              x: 0
+                              y: 92
+                              width: 89
+                              height: 33
+                              text: atext
+                              font.pixelSize: 12
+                              wrapMode: Text.WrapAnywhere
+                          }
+
+                          Image {
+                              id: image
+                              anchors.fill: parent
+                              source: bicon
+                              sourceSize.height: 89
+                              sourceSize.width: 89
+                              fillMode: Image.PreserveAspectFit
+                          }
+                      }
+                  }
+              }
+          }
+    }
+
+
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
 
 
 
@@ -61,35 +178,35 @@ CutieWindow{
         Item {
             x: 0
             y: 0
-          //  z: 100
+            //  z: 100
             height: parent.height
             width: parent.width
 
             MouseArea {
-             //   enabled: (settingsState.state != "opened") && (screenLockState.state == "opened")
-              //  drag.target: parent; drag.axis: Drag.YAxis; drag.minimumY: 0; drag.maximumY: view.height
+                //   enabled: (settingsState.state != "opened") && (screenLockState.state == "opened")
+                //  drag.target: parent; drag.axis: Drag.YAxis; drag.minimumY: 0; drag.maximumY: view.height
                 anchors.fill: parent
 
                 onReleased: {
-                   //if (parent.y < parent.height) {
+                    //if (parent.y < parent.height) {
                     if(player.state=="closed"){
                         player.state = "opened"
-                       // player.setSettingContainerState("opened");
+                        // player.setSettingContainerState("opened");
 
-                  }else{
-  player.state = "closed"
-                       // player.setSettingContainerState("closed");
-           }
+                    }else{
+                        player.state = "closed"
+                        // player.setSettingContainerState("closed");
+                    }
 
-                  //  parent.y = 0
+                    //  parent.y = 0
                 }
 
-               // onPositionChanged: {
-              //      if (drag.active) {
-              //          player.opacity = parent.y / view.height / 2;
-              //          player.setSettingContainerY(parent.y - view.height);
+                // onPositionChanged: {
+                //      if (drag.active) {
+                //          player.opacity = parent.y / view.height / 2;
+                //          player.setSettingContainerY(parent.y - view.height);
                 //    }
-              //  }
+                //  }
 
 
             }
@@ -108,17 +225,11 @@ CutieWindow{
                 anchors.fill: image1
                 id: previus
                 onClicked: {
-                    onClicked: {
-                        playlistView.currentIndex--
-                        var index = playlistView.currentIndex
-                        var path = playlistModel.get(index)["path"]
-                        mediaPlayer.source = path
-       playedStatus=true
-                           mediaPlayer.play()
+                    toMove = 4
+                    mediaPlayer.stop()
 
                 }
             }
-        }
         }
 
         Image {
@@ -136,25 +247,24 @@ CutieWindow{
                 id: implay
                 onClicked: {
 
-                        if (mediaPlayer.playbackState === MediaPlayer.PlayingState){
-                            mediaPlayer.pause()
-                             image2.source = (atmospheresHandler.variant == "dark") ? "/icons/icon-m-play.svg":"/icons_black/play.png"
-                            btnPlayslate = false
-   playedStatus=false
-                        }else if (mediaPlayer.playbackState === MediaPlayer.StoppedState) {
-                            var index = playlistView.currentIndex
-                                image2.source = (atmospheresHandler.variant == "dark") ?   "/icons/icon-m-pause.svg":"/icons_black/pause_black.png"
-                            btnPlayslate: true
-                            var path = playlistModel.get(index)["path"]
-                            mediaPlayer.source = path
-   playedStatus=true
-                               mediaPlayer.play()
-                        } else{
-                            mediaPlayer.play()
-                            btnPlayslate: true
+                    if (mediaPlayer.playbackState === MediaPlayer.PlayingState){
+                        mediaPlayer.pause()
+                        image2.source = (atmospheresHandler.variant == "dark") ? "/icons/icon-m-play.svg":"/icons_black/play.png"
+                        btnPlayslate = false
+                    }else if (mediaPlayer.playbackState === MediaPlayer.StoppedState) {
+                        var index = playlistView.currentIndex
+                        image2.source = (atmospheresHandler.variant == "dark") ?   "/icons/icon-m-pause.svg":"/icons_black/pause_black.png"
+                        btnPlayslate: true
+                        var path = playlistModel.get(index)["path"]
+                        mediaPlayer.source = path
 
-                              image2.source = (atmospheresHandler.variant == "dark") ?   "/icons/icon-m-pause.svg":"/icons_black/pause_black.png"
-                               playedStatus=true
+                        mediaPlayer.play()
+                    } else{
+                        mediaPlayer.play()
+                        btnPlayslate: true
+
+                        image2.source = (atmospheresHandler.variant == "dark") ?   "/icons/icon-m-pause.svg":"/icons_black/pause_black.png"
+                        // playedStatus=true
 
                     }
 
@@ -181,75 +291,98 @@ CutieWindow{
 
                 onClicked: {
                     //onClicked: addingMusicDialog.open()
-                    playlistView.currentIndex++
-                    var index = playlistView.currentIndex
-                    var path = playlistModel.get(index)["path"]
-                    mediaPlayer.source = path
+                    //   playlistView.currentIndex++
+                    //  var index = playlistView.currentIndex
+                    //  var path = playlistModel.get(index)["path"]
+                    //mediaPlayer.source = path
+                    //  mediaPlayer.play()
+                    toMove = 2
+                    mediaPlayer.stop()
 
                 }
             }
         }
     }
 
-    Text {
-        id: titleAudio
-        x: 8
-        y: -41
-        width: 106
-        height: 40
-         color: (atmospheresHandler.variant == "dark") ? "white" : "black"
-        text: qsTr("Music")
-        anchors.left: parent.left
-        anchors.top: parent.top
-        font.pixelSize: 33
-        horizontalAlignment: Text.AlignLeft
-        anchors.topMargin: 0
-        anchors.leftMargin: 8
-        font.bold: false
-        font.family: "lato"
-    }
-
     MediaPlayer {
         id: mediaPlayer
-     //   autoPlay: true
+        //   autoPlay: true
         source : url
- audioRole: MediaPlayer.MusicRole
+        audioRole: MediaPlayer.MusicRole
         readonly property string title: !!metaData.author && !!metaData.title
                                         ? qsTr("%1 - %2").arg(metaData.author).arg(metaData.title)
                                         : metaData.author || metaData.title || source
-       onStopped: {
+        onStopped: {
+            if(toMove ==  0){
+                playlistView.currentIndex++
+                var index = playlistView.currentIndex
+                var path = playlistModel.get(index)["path"]
+                mediaPlayer.source = path
 
-           if(playedStatus==true){
-               //if(!playlistView.currentIndex==playlistView.count++){
-           playlistView.currentIndex++
-           var index = playlistView.currentIndex
-           var path = playlistModel.get(index)["path"]
-           mediaPlayer.source = path
-           mediaPlayer.play()
-           playedStatus=false
-       }
-       }
-       onPlaying:{
-   //mediaPlayer.p
-       }
+                toMove= 1
+                slatetime.start()
+
+            }else if(toMove==2){
+                playlistView.currentIndex++
+                var index = playlistView.currentIndex
+                var path = playlistModel.get(index)["path"]
+                mediaPlayer.source = path
+
+                toMove= 3
+                slatetime.start()
+
+            }else if(toMove==4){
+                playlistView.currentIndex--
+                var index = playlistView.currentIndex
+                var path = playlistModel.get(index)["path"]
+                mediaPlayer.source = path
+
+                toMove= 5
+                slatetime.start()
+
+            }
+
+        }
+
+        onPlaylistChanged:{
+
+        }
+
+        onPlaying:{
+
+        }
+    }
+    Timer {
+        id: slatetime
+        interval: 2000; running: true; repeat: false
+        onTriggered: {
+            toMove=0
+            mediaPlayer.play()
+        }
     }
 
     ScrollView {
         id: scroll
+        x: 0
+        y: 0
+        height: 653
         anchors.fill: parent
-        anchors.bottomMargin: 57
-        anchors.topMargin: 42
+        anchors.rightMargin: 0
+        anchors.leftMargin: 0
+        anchors.bottomMargin: 55
+        anchors.topMargin: 45
         //Layout.fillWidth: true
         //Layout.fillHeight: true
         // flickableItem.interactive: true
 
         ListView {
             id: playlistView
+            y: 0
             anchors.fill: parent
             anchors.rightMargin: 0
             anchors.leftMargin: 0
-            anchors.topMargin: 42
-            anchors.bottomMargin: 15
+            anchors.topMargin: 0
+            anchors.bottomMargin: 0
             model: playlistModel
             delegate: playlistDelegate
             //                    delegate: PlaylistDelegate {  }
@@ -259,7 +392,7 @@ CutieWindow{
     Component {
         id: playlistHighlight
         Rectangle {
-              color: (atmospheresHandler.variant == "dark") ? "#5cffffff" : "#5c000000"
+            color: (atmospheresHandler.variant == "dark") ? "#5cffffff" : "#5c000000"
             radius: 5
             y: playlistView.currentItem.y
             Behavior on y {
@@ -300,23 +433,52 @@ CutieWindow{
                 anchors.fill: parent
                 onClicked: playlistView.currentIndex = index
                 onDoubleClicked:{
-                     btnPlayslate=true
-                       image2.source = (atmospheresHandler.variant == "dark") ? "/icons_black/play.png":"/icons/icon-m-play.svg"
+                    btnPlayslate=true
+                    image2.source = (atmospheresHandler.variant == "dark") ? "/icons/icon-m-play.svg":"/icons_black/play.png"
                     mediaPlayer.source = path
 
-               }
+                }
             }
         }
     }
-  Player {
-    id: player
-  }
+    Player {
+        id: player
+    }
+    CreatePlaylistWindow {
+        id: createPlaylistWindow
+    }
+
+    Label {
+        id: titleM
+        width: 116
+        height: 29
+        text: qsTr("Your music")
+        anchors.left: parent.left
+        anchors.top: parent.top
+        font.pointSize: 14
+        anchors.leftMargin: 8
+        font.family: "Lato"
+        anchors.topMargin: 8
+        color:  (atmospheresHandler.variant == "dark") ? "white" : "black"
+    }
+
+    Rectangle {
+        id: rectangleM
+        height: 1
+        color:     (atmospheresHandler.variant == "dark") ? "white" : "#66000000"
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.leftMargin: 8
+        anchors.rightMargin: 8
+        anchors.topMargin: 36
+    }
 
 
 }
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.75}D{i:9}
+    D{i:0;formeditorZoom:0.9}
 }
 ##^##*/
