@@ -28,18 +28,56 @@ CutieWindow {
         id: miniControls
 
         y: 424
-        height: 56
+        height: 70
         color: (atmospheresHandler.variant == "dark") ? "#2effffff" : "#5c000000"
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
+        Image {
+            id: miniCover
+            y: 10
+            width: 50
+            height: 50
+            anchors.leftMargin: 10
+            anchors.left: parent.left
+            fillMode: Image.PreserveAspectFit
+            source: cutieMusic.trackList[playlistView.currentIndex].path.toString().replace("file:///", "image://cover/")
+        }
+
+        Text {
+            anchors.top: parent.top
+            anchors.topMargin: 10
+            anchors.leftMargin: 10
+            anchors.left: miniCover.right
+            anchors.rightMargin: 10
+            anchors.right: miniPlay.left
+            text: cutieMusic.trackList[playlistView.currentIndex].title
+            font.pixelSize: 22
+            color: (atmospheresHandler.variant == "dark") ? "white" : "black"
+            elide: Text.ElideRight
+        }
+
+
+        Text {
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
+            anchors.leftMargin: 10
+            anchors.left: miniCover.right
+            anchors.rightMargin: 10
+            anchors.right: miniPlay.left
+            text: cutieMusic.trackList[playlistView.currentIndex].artist
+            font.pixelSize: 15
+            color: (atmospheresHandler.variant == "dark") ? "white" : "black"
+            elide: Text.ElideRight
+        }
+
         Item {
             x: 0
             y: 0
-            //  z: 100
             height: parent.height
             width: parent.width
+            z: 100
 
             MouseArea {
                 anchors.fill: parent
@@ -54,46 +92,20 @@ CutieWindow {
         }
 
         Image {
-            id: image1
-
-            x: 248
-            y: 8
-            width: 44
-            height: 40
-            source: (atmospheresHandler.variant == "dark") ? "/icons/icon-m-previous.svg" : "/icons_black/previous.png"
-            anchors.horizontalCenterOffset: -50
-            anchors.horizontalCenter: image2.horizontalCenter
+            id: miniPlay
+            y: 10
+            width: 55
+            height: 50
+            source: player.playButton.source
+            anchors.rightMargin: 10
+            anchors.right: parent.right
             fillMode: Image.PreserveAspectFit
+            z: 200
 
             MouseArea {
-                id: previous
+                id: miniimplay
 
-                anchors.fill: image1
-                onClicked: {
-                    if (playlistView.currentIndex > 0)
-                        playlistView.currentIndex--;
-                    else playlistView.currentIndex = cutieMusic.trackList.length - 1;
-                }
-            }
-
-        }
-
-        Image {
-            id: image2
-
-            x: 298
-            y: 8
-            width: 44
-            height: 40
-            source: (atmospheresHandler.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/play.png"
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: 0
-            fillMode: Image.PreserveAspectFit
-
-            MouseArea {
-                id: implay
-
-                anchors.fill: image2
+                anchors.fill: miniPlay
                 onClicked: {
                     if (mediaPlayer.playbackState === MediaPlayer.PlayingState) {
                         mediaPlayer.pause();
@@ -103,31 +115,6 @@ CutieWindow {
                         } 
                         mediaPlayer.play();
                     }
-                }
-            }
-
-        }
-
-        Image {
-            id: image3
-
-            x: 348
-            y: 8
-            width: 44
-            height: 40
-            source: (atmospheresHandler.variant == "dark") ? "/icons/icon-m-next.svg" : "/icons_black/next_black.png"
-            anchors.horizontalCenter: image2.horizontalCenter
-            anchors.horizontalCenterOffset: 50
-            fillMode: Image.PreserveAspectFit
-
-            MouseArea {
-                id: next
-
-                anchors.fill: image3
-                onClicked: {
-                    if (playlistView.currentIndex + 1 < cutieMusic.trackList.length)
-                        playlistView.currentIndex++;
-                    else playlistView.currentIndex = 0;
                 }
             }
 
@@ -152,9 +139,9 @@ CutieWindow {
 
         onPlaybackStateChanged: {
             if (playbackState == MediaPlayer.PlayingState) {
-                image2.source = (atmospheresHandler.variant == "dark") ? "/icons/icon-m-pause.svg" : "/icons_black/pause_black.png";
+                player.playButton.source = Qt.binding(() => (atmospheresHandler.variant == "dark") ? "/icons/icon-m-pause.svg" : "/icons_black/icon-m-pause.svg");
             } else {
-                image2.source = (atmospheresHandler.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/play.png";
+                player.playButton.source = Qt.binding(() => (atmospheresHandler.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/icon-m-play.svg");
             }
         }
     }
@@ -252,7 +239,6 @@ CutieWindow {
 		        font.pixelSize: 9
                 color: (atmospheresHandler.variant == "dark") ? "white" : "black"
             }
-
 
             MouseArea {
                 id: mouse
