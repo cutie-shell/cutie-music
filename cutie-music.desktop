@@ -4,8 +4,8 @@
 Version=1.2
 Type=Application
 Name=Music
-Exec=/opt/cutie-music/bin/cutie-music
-TryExec=/opt/cutie-music/bin/cutie-music
+Exec=/usr/bin/cutie-music
+TryExec=/usr/bin/cutie-music
 Icon=cutie-music
 Terminal=false
 StartupNotify=false
