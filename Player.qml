@@ -2,11 +2,13 @@ import Cutie 1.0
 import QtGraphicalEffects 1.15
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtMultimedia 5.15
 
 Rectangle {
     id: player
 
     property int dpi: 4
+    property alias playButton: image2
 
     width: view.width
     height: view.height
@@ -130,6 +132,86 @@ Rectangle {
         font.weight: Font.Normal
         color: (atmospheresHandler.variant == "dark") ? "white" : "black"
         elide: Text.ElideRight
+    }
+
+    Item {
+        id: controls
+
+        height: 60
+        width: 138
+        anchors.bottom: slideritem.top
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        Image {
+            id: image1
+            width: 66
+            height: 60
+            source: (atmospheresHandler.variant == "dark") ? "/icons/icon-m-previous.svg" : "/icons_black/previous.png"
+            anchors.rightMargin: 20
+            anchors.right: image2.left
+            fillMode: Image.PreserveAspectFit
+
+            MouseArea {
+                id: previous
+
+                anchors.fill: image1
+                onClicked: {
+                    if (playlistView.currentIndex > 0)
+                        playlistView.currentIndex--;
+                    else playlistView.currentIndex = cutieMusic.trackList.length - 1;
+                }
+            }
+
+        }
+
+        Image {
+            id: image2
+            width: 66
+            height: 60
+            source: (atmospheresHandler.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/icon-m-play.svg"
+            anchors.horizontalCenter: parent.horizontalCenter
+            fillMode: Image.PreserveAspectFit
+
+            MouseArea {
+                id: implay
+
+                anchors.fill: image2
+                onClicked: {
+                    if (mediaPlayer.playbackState === MediaPlayer.PlayingState) {
+                        mediaPlayer.pause();
+                    } else {
+                        if (mediaPlayer.playbackState === MediaPlayer.StoppedState) {
+                            mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
+                        } 
+                        mediaPlayer.play();
+                    }
+                }
+            }
+
+        }
+
+        Image {
+            id: image3
+            width: 66
+            height: 60
+            source: (atmospheresHandler.variant == "dark") ? "/icons/icon-m-next.svg" : "/icons_black/next_black.png"
+            anchors.leftMargin: 20
+            anchors.left: image2.right
+            fillMode: Image.PreserveAspectFit
+
+            MouseArea {
+                id: next
+
+                anchors.fill: image3
+                onClicked: {
+                    if (playlistView.currentIndex + 1 < cutieMusic.trackList.length)
+                        playlistView.currentIndex++;
+                    else playlistView.currentIndex = 0;
+                }
+            }
+
+        }
+
     }
 
     Rectangle {
