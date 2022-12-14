@@ -4,7 +4,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtMultimedia 5.15
 
-Rectangle {
+CutiePage {
     id: player
 
     property int dpi: 4
@@ -12,77 +12,6 @@ Rectangle {
 
     width: view.width
     height: view.height
-    color: "#00ffffff"
-    // id: playerSlate
-    state: "closed"
-    states: [
-        State {
-            name: "closed"
-
-            PropertyChanges {
-                target: player
-                opacity: 0
-                y: view.height
-            }
-
-            PropertyChanges {
-                target: playlistView
-                opacity: 1
-                enabled: true
-            }
-
-        },
-        State {
-            name: "unopened"
-
-            PropertyChanges {
-                target: player
-                opacity: 0
-                y: view.height
-            }
-
-        },
-        State {
-            name: "opened"
-
-            PropertyChanges {
-                target: player
-                opacity: 1
-                y: 0
-            }
-
-            PropertyChanges {
-                target: playlistView
-                opacity: 0
-                enabled: false
-            }
-
-        }
-    ]
-    transitions: [
-        Transition {
-            to: "opened"
-
-            NumberAnimation {
-                target: player
-                properties: "opacity"
-                duration: 300
-                easing.type: Easing.InOutQuad
-            }
-
-        },
-        Transition {
-            to: "closed"
-
-            NumberAnimation {
-                target: player
-                properties: "opacity"
-                duration: 300
-                easing.type: Easing.InOutQuad
-            }
-
-        }
-    ]
 
     Image {
         id: image
