@@ -1,29 +1,28 @@
 #ifndef APPCORE_H
 #define APPCORE_H
 
-#include <QObject>
-#include <QFile>
 #include <QDir>
+#include <QObject>
 #include <QStandardPaths>
-#include <QFileInfo>
+#include <QUrl>
+#include <QVariant>
+#include <fileref.h>
+#include <tag.h>
 
+class AppCore : public QObject {
+  Q_OBJECT
+  Q_PROPERTY(QVariantList trackList READ trackList NOTIFY trackListChanged)
 
-class AppCore : public QObject
-{
-    Q_OBJECT
 public:
-    explicit AppCore(QObject *parent = nullptr);
+  explicit AppCore(QObject *parent = nullptr);
+  QVariantList trackList();
+  void readTrackList(QDir dir);
 
 signals:
-    void sendString(QString current_line);
+  void trackListChanged(QVariantList trackList);
 
-public slots:
-    void receiveFromQml();
-
-private:
-    int m_counter {0};
-    QString current_file_path;
-    QStringList trackList;
+private: 
+  QVariantList m_trackList;
 };
 
 #endif // APPCORE_H

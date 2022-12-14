@@ -13,7 +13,7 @@ Rectangle{
             name: "closed"
             PropertyChanges { target: createPlaylistWindow; opacity: 0; enabled: false }
             PropertyChanges {
-                target: main.scroll
+                target: main.playlistView
                opacity: 1
                 enabled: true
 
@@ -30,7 +30,7 @@ Rectangle{
             name: "opened"
             PropertyChanges { target: createPlaylistWindow; opacity: 1; enabled: true }
             PropertyChanges {
-                target: scroll
+                target: playlistView
                   opacity: 0
                 enabled: false
 

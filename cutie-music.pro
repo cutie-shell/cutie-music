@@ -1,6 +1,7 @@
 QT += quick
 
-CONFIG += c++11 core qml quick
+CONFIG += c++11 core qml quick link_pkgconfig
+PKGCONFIG += taglib
 
 
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -9,12 +10,15 @@ CONFIG += c++11 core qml quick
 
 SOURCES += \
         appcore.cpp \
+        coverimageprovider.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
 RESOURCES += fonts/fonts.qrc
 HEADERS += \
-    appcore.h
+    appcore.h \
+    coverimageprovider.h
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
@@ -22,8 +26,7 @@ QML_IMPORT_PATH =
 QML_DESIGNER_IMPORT_PATH =
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+target.path = /usr/bin/
 !isEmpty(target.path): INSTALLS += target
 desktopfile.files = cutie-music.desktop
 desktopfile.path = /usr/share/applications/
