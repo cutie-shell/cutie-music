@@ -41,7 +41,7 @@ CutiePage {
         anchors.horizontalCenter: parent.horizontalCenter
         font.family: "Lato"
         font.weight: Font.Black
-        color: (atmospheresHandler.variant == "dark") ? "white" : "black"
+        color: (Atmosphere.variant == "dark") ? "white" : "black"
         elide: Text.ElideRight
     }
 
@@ -59,7 +59,7 @@ CutiePage {
         anchors.horizontalCenter: parent.horizontalCenter
         font.family: "Lato"
         font.weight: Font.Normal
-        color: (atmospheresHandler.variant == "dark") ? "white" : "black"
+        color: (Atmosphere.variant == "dark") ? "white" : "black"
         elide: Text.ElideRight
     }
 
@@ -75,7 +75,7 @@ CutiePage {
             id: image1
             width: 66
             height: 60
-            source: (atmospheresHandler.variant == "dark") ? "/icons/icon-m-previous.svg" : "/icons_black/previous.png"
+            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-previous.svg" : "/icons_black/previous.png"
             anchors.rightMargin: 20
             anchors.right: image2.left
             fillMode: Image.PreserveAspectFit
@@ -97,7 +97,7 @@ CutiePage {
             id: image2
             width: 66
             height: 60
-            source: (atmospheresHandler.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/icon-m-play.svg"
+            source: miniPlay.source
             anchors.horizontalCenter: parent.horizontalCenter
             fillMode: Image.PreserveAspectFit
 
@@ -123,7 +123,7 @@ CutiePage {
             id: image3
             width: 66
             height: 60
-            source: (atmospheresHandler.variant == "dark") ? "/icons/icon-m-next.svg" : "/icons_black/next_black.png"
+            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-next.svg" : "/icons_black/next_black.png"
             anchors.leftMargin: 20
             anchors.left: image2.right
             fillMode: Image.PreserveAspectFit
@@ -164,7 +164,7 @@ CutiePage {
             property real maximumValue: mediaPlayer.duration
             property bool sync: false
 
-            value: mediaPlayer.duration
+            value: mediaPlayer.position
             anchors.fill: parent
             onValueChanged: {
                 if (!sync)
@@ -193,7 +193,7 @@ CutiePage {
                 height: 5 / 2
                 width: root.availableWidth - root.rightPadding - root.leftPadding
                 radius: 5 / 4
-                color: (atmospheresHandler.variant == "dark") ? "#8fffffff" : "#60000000"
+                color: (Atmosphere.variant == "dark") ? "#8fffffff" : "#60000000"
             }
 
             handle: Rectangle {
@@ -202,7 +202,7 @@ CutiePage {
                 width: 5 * 6
                 height: 5 * 6
                 radius: width / 2
-                color: (atmospheresHandler.variant == "dark") ? "#ffffff" : "#000000"
+                color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
             }
 
         }
