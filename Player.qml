@@ -75,10 +75,12 @@ CutiePage {
             id: image1
             width: 66
             height: 60
-            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-previous.svg" : "/icons_black/previous.png"
+            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-previous.svg" : "/icons_black/icon-m-previous.png"
             anchors.rightMargin: 20
             anchors.right: image2.left
             fillMode: Image.PreserveAspectFit
+            sourceSize.height: height
+            sourceSize.width: width
 
             MouseArea {
                 id: previous
@@ -100,6 +102,8 @@ CutiePage {
             source: miniPlay.source
             anchors.horizontalCenter: parent.horizontalCenter
             fillMode: Image.PreserveAspectFit
+            sourceSize.height: height
+            sourceSize.width: width
 
             MouseArea {
                 id: implay
@@ -123,10 +127,12 @@ CutiePage {
             id: image3
             width: 66
             height: 60
-            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-next.svg" : "/icons_black/next_black.png"
+            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-next.svg" : "/icons_black/icon-m-next.png"
             anchors.leftMargin: 20
             anchors.left: image2.right
             fillMode: Image.PreserveAspectFit
+            sourceSize.height: height
+            sourceSize.width: width
 
             MouseArea {
                 id: next

@@ -1,26 +1,15 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>Player.qml</file>
         <file>icons/icon-m-next.svg</file>
         <file>icons/icon-m-pause.svg</file>
         <file>icons/icon-m-play.svg</file>
         <file>icons/icon-m-previous.svg</file>
-        <file>icons/icon-m-speaker.svg</file>
-        <file>Player.qml</file>
-        <file>icons_black/next_black.png</file>
-        <file>icons_black/next_grey.png</file>
+        <file>icons_black/icon-m-next.svg</file>
         <file>icons_black/icon-m-pause.svg</file>
         <file>icons_black/icon-m-play.svg</file>
-        <file>icons_black/previous.png</file>
-        <file>icons/music.png</file>
-        <file>icons_black/icon-m-music.svg</file>
+        <file>icons_black/icon-m-previous.svg</file>
         <file>CreatePlaylistWindow.qml</file>
-        <file>icons/icon-m-accept.svg</file>
-        <file>icons/icon-m-add.svg</file>
-        <file>icons/icon-m-dismiss.svg</file>
-        <file>icons/icon-m-music.svg</file>
-        <file>icons_black/icon-m-accept.png</file>
-        <file>icons_black/icon-m-add.png</file>
-        <file>icons_black/icon-m-dismiss.png</file>
     </qresource>
 </RCC>

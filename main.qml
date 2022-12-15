@@ -101,7 +101,9 @@ CutieWindow {
                 anchors.rightMargin: 10
                 anchors.right: parent.right
                 fillMode: Image.PreserveAspectFit
-		source: (Atmosphere.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/icon-m-play.svg"
+                sourceSize.height: height
+                sourceSize.width: width
+		        source: (Atmosphere.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/icon-m-play.svg"
                 z: 200
 
                 MouseArea {
