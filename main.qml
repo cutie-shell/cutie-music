@@ -19,7 +19,7 @@ CutieWindow {
     property int toMove: 0
     property int colPlaylist: 0
 
-    property var player: Qt.createComponent("Player.qml").createObject(null, {})
+    property var player: Qt.createComponent("Player.qml")
 
     width: 400
     height: 800
@@ -34,7 +34,7 @@ CutieWindow {
 
             y: 424
             height: 70
-            color: (atmospheresHandler.variant == "dark") ? "#2effffff" : "#5c000000"
+            color: (Atmosphere.variant == "dark") ? "#2effffff" : "#5c000000"
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
@@ -59,7 +59,7 @@ CutieWindow {
                 anchors.right: miniPlay.left
                 text: cutieMusic.trackList[playlistView.currentIndex].title
                 font.pixelSize: 20
-                color: (atmospheresHandler.variant == "dark") ? "white" : "black"
+                color: (Atmosphere.variant == "dark") ? "white" : "black"
                 elide: Text.ElideRight
             }
 
@@ -73,7 +73,7 @@ CutieWindow {
                 anchors.right: miniPlay.left
                 text: cutieMusic.trackList[playlistView.currentIndex].artist
                 font.pixelSize: 13
-                color: (atmospheresHandler.variant == "dark") ? "white" : "black"
+                color: (Atmosphere.variant == "dark") ? "white" : "black"
                 elide: Text.ElideRight
             }
 
@@ -98,10 +98,10 @@ CutieWindow {
                 y: 10
                 width: 55
                 height: 50
-                source: player.playButton.source
                 anchors.rightMargin: 10
                 anchors.right: parent.right
                 fillMode: Image.PreserveAspectFit
+		source: (Atmosphere.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/icon-m-play.svg"
                 z: 200
 
                 MouseArea {
@@ -141,9 +141,9 @@ CutieWindow {
 
             onPlaybackStateChanged: {
                 if (playbackState == MediaPlayer.PlayingState) {
-                    player.playButton.source = Qt.binding(() => (atmospheresHandler.variant == "dark") ? "/icons/icon-m-pause.svg" : "/icons_black/icon-m-pause.svg");
+                    miniPlay.source = Qt.binding(() => (Atmosphere.variant == "dark") ? "/icons/icon-m-pause.svg" : "/icons_black/icon-m-pause.svg");
                 } else {
-                    player.playButton.source = Qt.binding(() => (atmospheresHandler.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/icon-m-play.svg");
+                    miniPlay.source = Qt.binding(() => (Atmosphere.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/icon-m-play.svg");
                 }
             }
         }
@@ -154,8 +154,6 @@ CutieWindow {
             anchors.right: parent.right
             anchors.bottom: miniControls.top
             anchors.top: parent.top
-            anchors.leftMargin: 20
-            anchors.rightMargin: 20
             model: cutieMusic.trackList
             delegate: playlistDelegate
             highlight: playlistHighlight
@@ -174,19 +172,24 @@ CutieWindow {
         Component {
             id: playlistHighlight
 
-            Rectangle {
-                color: (atmospheresHandler.variant == "dark") ? "#5cffffff" : "#5c000000"
-                radius: 5
+            Item {
                 y: playlistView.currentItem.y
+                Rectangle {
+                    color: (Atmosphere.variant == "dark") ? "#5cffffff" : "#5c000000"
+                    radius: 5
+                    anchors.fill: parent
+                    anchors.leftMargin: 20
+                    anchors.rightMargin: 20
 
-                Behavior on y {
-                    SpringAnimation {
-                        spring: 3
-                        damping: 0.2
+                    Behavior on y {
+                        SpringAnimation {
+                            spring: 3
+                            damping: 0.2
+                        }
+
                     }
 
                 }
-
             }
 
         }
@@ -202,14 +205,16 @@ CutieWindow {
                     id: rectItem
 
                     anchors.fill: parent
-                    color: (atmospheresHandler.variant == "dark") ? "#5cffffff" : "#5c000000"
+                    color: (Atmosphere.variant == "dark") ? "#5cffffff" : "#5c000000"
                     radius: 5
                     visible: mouse.pressed
+                    anchors.leftMargin: 20
+                    anchors.rightMargin: 20
                 }
 
                 Image {
                     id: image
-                    x: 10
+                    x: 30
                     width: 40
                     height: 40
                     source: modelData.path.toString().replace("file:///", "image://cover/")
@@ -220,26 +225,28 @@ CutieWindow {
                 }
 
                 Text {
-                    x: 60
+                    x: 80
                     y: 10
                     text: modelData.title
                     font.pixelSize: 12
-                    color: (atmospheresHandler.variant == "dark") ? "white" : "black"
+                    color: (Atmosphere.variant == "dark") ? "white" : "black"
                 }
 
 
                 Text {
-                    x: 60
+                    x: 80
                     y: 30
                     text: modelData.artist
                     font.pixelSize: 9
-                    color: (atmospheresHandler.variant == "dark") ? "white" : "black"
+                    color: (Atmosphere.variant == "dark") ? "white" : "black"
                 }
 
                 MouseArea {
                     id: mouse
 
                     anchors.fill: parent
+                    anchors.leftMargin: 20
+                    anchors.rightMargin: 20
                     onClicked: {
                         playlistView.currentIndex = index;
                     }
