@@ -1,6 +1,6 @@
 QT += quick
 
-CONFIG += c++11 core qml quick link_pkgconfig
+CONFIG += c++11 core qml quick link_pkgconfig qtquickcompiler
 PKGCONFIG += taglib
 
 
@@ -9,15 +9,15 @@ PKGCONFIG += taglib
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        appcore.cpp \
-        coverimageprovider.cpp \
-        main.cpp
+        src/appcore.cpp \
+        src/coverimageprovider.cpp \
+        src/main.cpp
 
-RESOURCES += qml.qrc
-RESOURCES += fonts/fonts.qrc
+RESOURCES += src/qml/qml.qrc
+RESOURCES += assets/assets.qrc
 HEADERS += \
-    appcore.h \
-    coverimageprovider.h
+    src/appcore.h \
+    src/coverimageprovider.h
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

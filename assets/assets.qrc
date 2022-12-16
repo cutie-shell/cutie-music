@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>Player.qml</file>
         <file>icons/icon-m-next.svg</file>
         <file>icons/icon-m-pause.svg</file>
         <file>icons/icon-m-play.svg</file>
@@ -10,6 +8,5 @@
         <file>icons_black/icon-m-pause.svg</file>
         <file>icons_black/icon-m-play.svg</file>
         <file>icons_black/icon-m-previous.svg</file>
-        <file>CreatePlaylistWindow.qml</file>
     </qresource>
 </RCC>
