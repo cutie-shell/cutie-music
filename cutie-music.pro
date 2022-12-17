@@ -1,6 +1,6 @@
 QT += quick
 
-CONFIG += c++11 core qml quick link_pkgconfig qtquickcompiler
+CONFIG += c++11 core qml quick link_pkgconfig qtquickcompiler lrelease embed_translations
 PKGCONFIG += taglib
 
 
@@ -37,5 +37,4 @@ icon.path = /usr/share/icons/hicolor/scalable/apps/
 INSTALLS += desktopfile icon
 
 
-
-
+TRANSLATIONS = translations/cutie-music_fi.ts
