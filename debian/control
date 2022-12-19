@@ -7,7 +7,10 @@ Build-Depends: pkg-kde-tools,
                qtbase5-dev,
                pkg-config,
                qtdeclarative5-dev,
-               libqt5multimedia5-plugins
+               libqt5multimedia5-plugins,
+               libtag1-dev,
+               qttools5-dev-tools,
+               libz-dev
 Standards-Version: 4.5.1
 
 Package: cutie-music
