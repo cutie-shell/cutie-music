@@ -75,7 +75,7 @@ CutiePage {
             id: image1
             width: 66
             height: 60
-            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-previous.svg" : "/icons_black/icon-m-previous.png"
+            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-previous.svg" : "/icons_black/icon-m-previous.svg"
             anchors.rightMargin: 20
             anchors.right: image2.left
             fillMode: Image.PreserveAspectFit
@@ -127,7 +127,7 @@ CutiePage {
             id: image3
             width: 66
             height: 60
-            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-next.svg" : "/icons_black/icon-m-next.png"
+            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-next.svg" : "/icons_black/icon-m-next.svg"
             anchors.leftMargin: 20
             anchors.left: image2.right
             fillMode: Image.PreserveAspectFit
