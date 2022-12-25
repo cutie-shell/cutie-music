@@ -69,6 +69,7 @@ CutiePage {
         height: 60
         width: 138
         anchors.bottom: slideritem.top
+        anchors.bottomMargin: 25
         anchors.horizontalCenter: parent.horizontalCenter
 
         Image {
@@ -152,18 +153,16 @@ CutiePage {
     Rectangle {
         id: slideritem
 
-        y: 824
         height: 53
         color: "#00ffffff"
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 100
+        anchors.bottomMargin: 75
 
         Slider {
             id: root
 
-            // z: 3
             property string valueText: ""
             property string label: ""
             property real minimumValue: 0
@@ -195,7 +194,7 @@ CutiePage {
 
             background: Rectangle {
                 x: root.leftPadding + 3 * 5
-                y: root.topPadding + 3.5 * 5
+                y: root.topPadding + 20
                 height: 5 / 2
                 width: root.availableWidth - root.rightPadding - root.leftPadding
                 radius: 5 / 4
