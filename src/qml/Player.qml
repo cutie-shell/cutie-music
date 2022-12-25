@@ -88,6 +88,7 @@ CutiePage {
 
                 anchors.fill: image1
                 onClicked: {
+                    mediaPlayer.playOnLoad = true;
                     if (playlistView.currentIndex > 0)
                         playlistView.currentIndex--;
                     else playlistView.currentIndex = cutieMusic.trackList.length - 1;
@@ -140,6 +141,7 @@ CutiePage {
 
                 anchors.fill: image3
                 onClicked: {
+                    mediaPlayer.playOnLoad = true;
                     if (playlistView.currentIndex + 1 < cutieMusic.trackList.length)
                         playlistView.currentIndex++;
                     else playlistView.currentIndex = 0;

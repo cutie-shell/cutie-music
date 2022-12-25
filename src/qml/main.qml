@@ -255,7 +255,9 @@ CutieWindow {
                     anchors.leftMargin: 20
                     anchors.rightMargin: 20
                     onClicked: {
+                        mediaPlayer.playOnLoad = true;
                         playlistView.currentIndex = index;
+                        mediaPlayer.play();
                     }
                 }
 
