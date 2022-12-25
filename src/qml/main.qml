@@ -133,11 +133,17 @@ CutieWindow {
 
             audioRole: MediaPlayer.MusicRole
 
+            property bool playOnLoad: false
+
             onStatusChanged: {
                 if (status == MediaPlayer.EndOfMedia) {
                     if (playlistView.currentIndex + 1 < cutieMusic.trackList.length)
                         playlistView.currentIndex++;
                     else playlistView.currentIndex = 0;
+                    playOnLoad = true;
+                } else if (status == MediaPlayer.Loaded && playOnLoad) {
+                    playOnLoad = false;
+                    play();
                 }
             }
 
@@ -167,7 +173,6 @@ CutieWindow {
 
             onCurrentIndexChanged: {
                 mediaPlayer.source = cutieMusic.trackList[currentIndex].path;
-                mediaPlayer.play();
             }
         }
 
