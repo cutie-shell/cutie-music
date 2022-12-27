@@ -28,38 +28,32 @@ CutiePage {
         fillMode: Image.PreserveAspectFit
     }
 
-    Label {
+    CutieLabel {
         id: text1
 
         width: parent.width - 50
         text: cutieMusic.trackList[playlistView.currentIndex].title
         anchors.top: image.bottom
         anchors.topMargin: 20
-        font.pixelSize: 32
+        font.pixelSize: 28
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        font.family: "Lato"
         font.weight: Font.Black
-        color: (Atmosphere.variant == "dark") ? "white" : "black"
         elide: Text.ElideRight
     }
 
-    Label {
+    CutieLabel {
         id: text2
 
-        x: 143
         width: parent.width - 50
         text: cutieMusic.trackList[playlistView.currentIndex].artist
         anchors.top: text1.bottom
         anchors.topMargin: 20
-        font.pixelSize: 24
+        font.pixelSize: 20
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        font.family: "Lato"
-        font.weight: Font.Normal
-        color: (Atmosphere.variant == "dark") ? "white" : "black"
         elide: Text.ElideRight
     }
 
@@ -152,68 +146,19 @@ CutiePage {
 
     }
 
-    Rectangle {
+    CutieSlider {
         id: slideritem
 
-        height: 53
-        color: "#00ffffff"
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 75
+        from: 0
+        to: mediaPlayer.duration
 
-        Slider {
-            id: root
-
-            property string valueText: ""
-            property string label: ""
-            property real minimumValue: 0
-            property real maximumValue: mediaPlayer.duration
-            property bool sync: false
-
-            value: mediaPlayer.position
-            anchors.fill: parent
-            onValueChanged: {
-                if (!sync)
-                    mediaPlayer.seek(value);
-
-            }
-            from: minimumValue
-            to: maximumValue
-            leftPadding: 2 * 5
-            rightPadding: 2 * 5
-            topPadding: 1 * 5
-            bottomPadding: 1 * 5
-
-            Connections {
-                target: mediaPlayer
-                onPositionChanged: {
-                    root.sync = true;
-                    root.value = mediaPlayer.position;
-                    root.sync = false;
-                }
-            }
-
-            background: Rectangle {
-                x: root.leftPadding + 3 * 5
-                y: root.topPadding + 20
-                height: 5 / 2
-                width: root.availableWidth - root.rightPadding - root.leftPadding
-                radius: 5 / 4
-                color: (Atmosphere.variant == "dark") ? "#8fffffff" : "#60000000"
-            }
-
-            handle: Rectangle {
-                x: root.leftPadding + root.visualPosition * (root.availableWidth - width)
-                y: root.topPadding + root.availableHeight / 2 - height / 2
-                width: 5 * 6
-                height: 5 * 6
-                radius: width / 2
-                color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
-            }
-
+        value: mediaPlayer.position
+        onMoved: {
+            mediaPlayer.seek(value);
         }
-
     }
-
 }

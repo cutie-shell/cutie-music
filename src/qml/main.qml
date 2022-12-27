@@ -7,19 +7,14 @@ import QtQuick.Controls 2.5
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.12
 
-//Alexey T. (vin4ter) GNU GPL3
+// Authors: Alexey T. (vin4ter), Erik Inkinen
 CutieWindow {
     id: view
-
-    property bool debug: false
-    //Debug true or false for release in cutieShell DE please use false
     property bool playedStatus: false
     property int value: 0
     property bool btnPlayslate: false
     property int toMove: 0
     property int colPlaylist: 0
-
-    property var player: Qt.createComponent("Player.qml")
 
     width: 400
     height: 800
@@ -32,7 +27,6 @@ CutieWindow {
         Rectangle {
             id: miniControls
 
-            y: 424
             height: 70
             color: (Atmosphere.variant == "dark") ? "#2effffff" : "#5c000000"
             anchors.left: parent.left
@@ -50,7 +44,7 @@ CutieWindow {
                 source: cutieMusic.trackList[playlistView.currentIndex].path.toString().replace("file:///", "image://cover/")
             }
 
-            Text {
+            CutieLabel {
                 anchors.top: parent.top
                 anchors.topMargin: 10
                 anchors.leftMargin: 10
@@ -59,12 +53,11 @@ CutieWindow {
                 anchors.right: miniPlay.left
                 text: cutieMusic.trackList[playlistView.currentIndex].title
                 font.pixelSize: 20
-                color: (Atmosphere.variant == "dark") ? "white" : "black"
                 elide: Text.ElideRight
             }
 
 
-            Text {
+            CutieLabel {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 10
                 anchors.leftMargin: 10
@@ -73,7 +66,6 @@ CutieWindow {
                 anchors.right: miniPlay.left
                 text: cutieMusic.trackList[playlistView.currentIndex].artist
                 font.pixelSize: 13
-                color: (Atmosphere.variant == "dark") ? "white" : "black"
                 elide: Text.ElideRight
             }
 
@@ -87,7 +79,7 @@ CutieWindow {
                 MouseArea {
                     anchors.fill: parent
                     onReleased: {
-                        view.pageStack.push(player, {});
+                        view.pageStack.push("qrc:/Player.qml", {});
                     }
                 }
 
@@ -156,7 +148,7 @@ CutieWindow {
             }
         }
 
-        ListView {
+        CutieListView {
             id: playlistView
             anchors.left: parent.left
             anchors.right: parent.right
@@ -164,7 +156,6 @@ CutieWindow {
             anchors.top: parent.top
             model: cutieMusic.trackList
             delegate: playlistDelegate
-            highlight: playlistHighlight
             clip: true
             header: CutiePageHeader {
                 id: titleM
@@ -177,93 +168,22 @@ CutieWindow {
         }
 
         Component {
-            id: playlistHighlight
-
-            Item {
-                y: playlistView.currentItem.y
-                Rectangle {
-                    color: (Atmosphere.variant == "dark") ? "#5cffffff" : "#5c000000"
-                    radius: 5
-                    anchors.fill: parent
-                    anchors.leftMargin: 20
-                    anchors.rightMargin: 20
-
-                    Behavior on y {
-                        SpringAnimation {
-                            spring: 3
-                            damping: 0.2
-                        }
-
-                    }
-
-                }
-            }
-
-        }
-
-        Component {
             id: playlistDelegate
 
-            Item {
-                width: playlistView.width
-                height: 50
-
-                Rectangle {
-                    id: rectItem
-
-                    anchors.fill: parent
-                    color: (Atmosphere.variant == "dark") ? "#5cffffff" : "#5c000000"
-                    radius: 5
-                    visible: mouse.pressed
-                    anchors.leftMargin: 20
-                    anchors.rightMargin: 20
+            CutieListItem {
+                highlighted: playlistView.currentIndex == index
+                icon.source: modelData.path.toString().replace("file:///", "image://cover/")
+                icon.width: 40
+                icon.height: 40
+                iconOverlay: false
+                text: modelData.title
+                subText: modelData.artist
+                onClicked: {
+                    mediaPlayer.playOnLoad = true;
+                    playlistView.currentIndex = index;
+                    mediaPlayer.play();
                 }
-
-                Image {
-                    id: image
-                    x: 30
-                    width: 40
-                    height: 40
-                    source: modelData.path.toString().replace("file:///", "image://cover/")
-                    anchors.verticalCenter: parent.verticalCenter
-                    sourceSize.height: height
-                    sourceSize.width: width
-                    fillMode: Image.PreserveAspectFit
-                }
-
-                Text {
-                    x: 80
-                    y: 10
-                    text: modelData.title
-                    font.pixelSize: 12
-                    color: (Atmosphere.variant == "dark") ? "white" : "black"
-                }
-
-
-                Text {
-                    x: 80
-                    y: 30
-                    text: modelData.artist
-                    font.pixelSize: 9
-                    color: (Atmosphere.variant == "dark") ? "white" : "black"
-                }
-
-                MouseArea {
-                    id: mouse
-
-                    anchors.fill: parent
-                    anchors.leftMargin: 20
-                    anchors.rightMargin: 20
-                    onClicked: {
-                        mediaPlayer.playOnLoad = true;
-                        playlistView.currentIndex = index;
-                        mediaPlayer.play();
-                    }
-                }
-
             }
-
         }
     }
-
 }
