@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<RCC>
-    <qresource prefix="/">
-        <file alias="main.qml">../src/qml/main.qml</file>
-        <file alias="Player.qml">../src/qml/Player.qml</file>
-    </qresource>
-</RCC>

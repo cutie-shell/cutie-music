@@ -1,8 +1,8 @@
-import Cutie 1.0
-import QtGraphicalEffects 1.15
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtMultimedia 5.15
+import Cutie
+import Qt5Compat.GraphicalEffects
+import QtQuick
+import QtQuick.Controls
+import QtMultimedia
 
 CutiePage {
     id: player
@@ -158,7 +158,8 @@ CutiePage {
 
         value: mediaPlayer.position
         onMoved: {
-            mediaPlayer.seek(value);
+            if (mediaPlayer.seekable)
+                mediaPlayer.position = value;
         }
     }
 }

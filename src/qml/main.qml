@@ -1,11 +1,11 @@
-import Cutie 1.0
-import Qt.labs.folderlistmodel 2.12
-import QtGraphicalEffects 1.0
-import QtMultimedia 5.15
-import QtQuick 2.12
-import QtQuick.Controls 2.5
-import QtQuick.Dialogs 1.2
-import QtQuick.Window 2.12
+import Cutie
+import Qt.labs.folderlistmodel
+import Qt5Compat.GraphicalEffects
+import QtMultimedia
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Dialogs
+import QtQuick.Window
 
 // Authors: Alexey T. (vin4ter), Erik Inkinen
 CutieWindow {
@@ -121,19 +121,17 @@ CutieWindow {
         MediaPlayer {
             id: mediaPlayer
 
-            readonly property string title: !!metaData.author && !!metaData.title ? qsTr("%1 - %2").arg(metaData.author).arg(metaData.title) : metaData.author || metaData.title || source
-
-            audioRole: MediaPlayer.MusicRole
+            audioOutput: AudioOutput {}
 
             property bool playOnLoad: false
 
-            onStatusChanged: {
-                if (status == MediaPlayer.EndOfMedia) {
+            onMediaStatusChanged: {
+                if (mediaStatus == MediaPlayer.EndOfMedia) {
+                    playOnLoad = true;
                     if (playlistView.currentIndex + 1 < cutieMusic.trackList.length)
                         playlistView.currentIndex++;
                     else playlistView.currentIndex = 0;
-                    playOnLoad = true;
-                } else if (status == MediaPlayer.Loaded && playOnLoad) {
+                } else if (mediaStatus == MediaPlayer.LoadedMedia && playOnLoad) {
                     playOnLoad = false;
                     play();
                 }
@@ -145,6 +143,10 @@ CutieWindow {
                 } else {
                     miniPlay.source = Qt.binding(() => (Atmosphere.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/icon-m-play.svg");
                 }
+            }
+            
+            onErrorOccurred: {
+                console.error(errorString);
             }
         }
 
@@ -181,7 +183,6 @@ CutieWindow {
                 onClicked: {
                     mediaPlayer.playOnLoad = true;
                     playlistView.currentIndex = index;
-                    mediaPlayer.play();
                 }
             }
         }
