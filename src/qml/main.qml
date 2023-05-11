@@ -108,8 +108,7 @@ CutieWindow {
                         } else {
                             if (mediaPlayer.playbackState === MediaPlayer.StoppedState) {
                                 mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
-                            } 
-                            mediaPlayer.play();
+                            } else mediaPlayer.play();
                         }
                     }
                 }
@@ -123,18 +122,12 @@ CutieWindow {
 
             audioOutput: AudioOutput {}
 
-            property bool playOnLoad: false
-
             onMediaStatusChanged: {
                 if (mediaStatus == MediaPlayer.EndOfMedia) {
-                    playOnLoad = true;
                     if (playlistView.currentIndex + 1 < cutieMusic.trackList.length)
                         playlistView.currentIndex++;
                     else playlistView.currentIndex = 0;
-                } else if (mediaStatus == MediaPlayer.LoadedMedia && playOnLoad) {
-                    playOnLoad = false;
-                    play();
-                }
+                } else if (mediaStatus == MediaPlayer.LoadedMedia) play();
             }
 
             onPlaybackStateChanged: {
@@ -145,7 +138,7 @@ CutieWindow {
                 }
             }
             
-            onErrorOccurred: {
+            onErrorOccurred: (error, errorString) => {
                 console.error(errorString);
             }
         }
@@ -163,10 +156,6 @@ CutieWindow {
                 id: titleM
                 title: qsTr("Music")
             }
-
-            onCurrentIndexChanged: {
-                mediaPlayer.source = cutieMusic.trackList[currentIndex].path;
-            }
         }
 
         Component {
@@ -181,8 +170,8 @@ CutieWindow {
                 text: modelData.title
                 subText: modelData.artist
                 onClicked: {
-                    mediaPlayer.playOnLoad = true;
                     playlistView.currentIndex = index;
+                    mediaPlayer.source = modelData.path;
                 }
             }
         }

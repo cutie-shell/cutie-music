@@ -82,10 +82,10 @@ CutiePage {
 
                 anchors.fill: image1
                 onClicked: {
-                    mediaPlayer.playOnLoad = true;
                     if (playlistView.currentIndex > 0)
                         playlistView.currentIndex--;
                     else playlistView.currentIndex = cutieMusic.trackList.length - 1;
+                    mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
                 }
             }
 
@@ -111,8 +111,7 @@ CutiePage {
                     } else {
                         if (mediaPlayer.playbackState === MediaPlayer.StoppedState) {
                             mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
-                        } 
-                        mediaPlayer.play();
+                        } else mediaPlayer.play();
                     }
                 }
             }
@@ -135,10 +134,10 @@ CutiePage {
 
                 anchors.fill: image3
                 onClicked: {
-                    mediaPlayer.playOnLoad = true;
                     if (playlistView.currentIndex + 1 < cutieMusic.trackList.length)
                         playlistView.currentIndex++;
                     else playlistView.currentIndex = 0;
+                    mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
                 }
             }
 
