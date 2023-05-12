@@ -127,6 +127,7 @@ CutieWindow {
                     if (playlistView.currentIndex + 1 < cutieMusic.trackList.length)
                         playlistView.currentIndex++;
                     else playlistView.currentIndex = 0;
+                    mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
                 } else if (mediaStatus == MediaPlayer.LoadedMedia) play();
             }
 
