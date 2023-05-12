@@ -28,7 +28,7 @@ CutieWindow {
             id: miniControls
 
             height: 70
-            color: (Atmosphere.variant == "dark") ? "#2effffff" : "#5c000000"
+	        color: Atmosphere.primaryAlphaColor
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
