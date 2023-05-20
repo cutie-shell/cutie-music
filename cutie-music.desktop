@@ -9,3 +9,5 @@ TryExec=/usr/bin/cutie-music
 Icon=cutie-music
 Terminal=false
 StartupNotify=false
+Comment=Player for music
+Categories=AudioVideo;Audio;Music
