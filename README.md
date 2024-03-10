@@ -12,10 +12,3 @@ sudo make install
 
 ## Troubleshooting
 None
-
-## Gallery
-
-<img src="screenshots/01.png" width="200px">
-<img src="screenshots/02.png" width="200px">
-<img src="screenshots/03.png" width="200px">
-<img src="screenshots/04.png" width="200px">
