@@ -17,8 +17,7 @@ set(cutie-music_SOURCES
 )
 
 qt_add_resources(APP_RESOURCES 
-	${CMAKE_SOURCE_DIR}/src/qml/qml.qrc
-	${CMAKE_SOURCE_DIR}/assets/assets.qrc)
+	${CMAKE_SOURCE_DIR}/src/qml/qml.qrc)
 
 qt_add_executable(cutie-music ${cutie-music_SOURCES} ${APP_RESOURCES})
 
