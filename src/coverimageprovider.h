@@ -9,10 +9,10 @@
 #include <QQuickImageProvider>
 #include <QImage>
 
-class CoverImageProvider : public QQuickImageProvider
-{
-public:
-    CoverImageProvider();
+class CoverImageProvider : public QQuickImageProvider {
+    public:
+	CoverImageProvider();
 
-    QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize) override;
+	QImage requestImage(const QString &id, QSize *size,
+			    const QSize &requestedSize) override;
 };

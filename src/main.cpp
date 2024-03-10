@@ -10,26 +10,27 @@
 #include <QtQuick/QQuickView>
 #include <QTranslator>
 
-int main(int argc, char *argv[]) {
-    AppCore appCore;
-    QGuiApplication app(argc, argv);
-    QString locale = QLocale::system().name();
-    QTranslator translator;
-    translator.load(QString(":/i18n/cutie-music_") + locale);
-    app.installTranslator(&translator);
-    CoverImageProvider coverProvider;
-    QQmlApplicationEngine engine;
-    engine.addImageProvider(QLatin1String("cover"), &coverProvider);
-    QQmlContext *context = engine.rootContext();
-    context->setContextProperty("cutieMusic", &appCore);
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(
-        &engine, &QQmlApplicationEngine::objectCreated, &app,
-        [url](QObject *obj, const QUrl &objUrl) {
-            if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-        },
-        Qt::QueuedConnection);
-    engine.load(url);
-    return app.exec();
+int main(int argc, char *argv[])
+{
+	AppCore appCore;
+	QGuiApplication app(argc, argv);
+	QString locale = QLocale::system().name();
+	QTranslator translator;
+	translator.load(QString(":/i18n/cutie-music_") + locale);
+	app.installTranslator(&translator);
+	CoverImageProvider coverProvider;
+	QQmlApplicationEngine engine;
+	engine.addImageProvider(QLatin1String("cover"), &coverProvider);
+	QQmlContext *context = engine.rootContext();
+	context->setContextProperty("cutieMusic", &appCore);
+	const QUrl url(QStringLiteral("qrc:/main.qml"));
+	QObject::connect(
+		&engine, &QQmlApplicationEngine::objectCreated, &app,
+		[url](QObject *obj, const QUrl &objUrl) {
+			if (!obj && url == objUrl)
+				QCoreApplication::exit(-1);
+		},
+		Qt::QueuedConnection);
+	engine.load(url);
+	return app.exec();
 }
