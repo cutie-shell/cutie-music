@@ -23,6 +23,7 @@ CutieWindow {
     initialPage: CutiePage {
         width: view.width
         height: view.height
+
         Rectangle {
             id: miniControls
 
@@ -31,6 +32,16 @@ CutieWindow {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
+            clip: true
+
+            FastBlur {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                height: view.height
+                source: playlistView
+                radius: 70
+            }
 
             Image {
                 id: miniCover
@@ -134,18 +145,28 @@ CutieWindow {
             }
         }
 
-        CutieListView {
-            id: playlistView
+        Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: miniControls.top
             anchors.top: parent.top
-            model: cutieMusic.trackList
-            delegate: playlistDelegate
             clip: true
-            header: CutiePageHeader {
-                id: titleM
-                title: qsTr("Music")
+            CutieListView {
+                id: playlistView
+                anchors.fill: parent
+                anchors.bottomMargin: -miniControls.height
+                model: cutieMusic.trackList
+                delegate: playlistDelegate
+                clip: true
+
+                header: CutiePageHeader {
+                    id: titleM
+                    title: qsTr("Music")
+                }
+
+                footer: Item {
+                    height: miniControls.height
+                }
             }
         }
 
