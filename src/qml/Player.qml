@@ -7,9 +7,6 @@ import QtMultimedia
 CutiePage {
     id: player
 
-    property int dpi: 4
-    property alias playButton: image2
-
     width: view.width
     height: view.height
 
@@ -66,83 +63,57 @@ CutiePage {
         anchors.bottomMargin: 25
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Image {
-            id: image1
+        CutieButton {
+            id: previous
             width: 66
             height: 60
-            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-previous.svg" : "/icons_black/icon-m-previous.svg"
             anchors.rightMargin: 20
-            anchors.right: image2.left
-            fillMode: Image.PreserveAspectFit
-            sourceSize.height: height
-            sourceSize.width: width
+            anchors.right: implay.left
+            icon.name: "media-skip-backward-symbolic"
+            icon.color: Atmosphere.textColor
 
-            MouseArea {
-                id: previous
-
-                anchors.fill: image1
-                onClicked: {
-                    if (playlistView.currentIndex > 0)
-                        playlistView.currentIndex--;
-                    else playlistView.currentIndex = cutieMusic.trackList.length - 1;
-                    mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
-                }
+            onClicked: {
+                if (playlistView.currentIndex > 0)
+                    playlistView.currentIndex--;
+                else playlistView.currentIndex = cutieMusic.trackList.length - 1;
+                mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
             }
-
         }
 
-        Image {
-            id: image2
+        CutieButton {
+            id: implay
             width: 66
             height: 60
-            source: miniPlay.source
             anchors.horizontalCenter: parent.horizontalCenter
-            fillMode: Image.PreserveAspectFit
-            sourceSize.height: height
-            sourceSize.width: width
+            icon: miniPlay.icon
 
-            MouseArea {
-                id: implay
-
-                anchors.fill: image2
-                onClicked: {
-                    if (mediaPlayer.playbackState === MediaPlayer.PlayingState) {
-                        mediaPlayer.pause();
-                    } else {
-                        if (mediaPlayer.playbackState === MediaPlayer.StoppedState) {
-                            mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
-                        } else mediaPlayer.play();
-                    }
+            onClicked: {
+                if (mediaPlayer.playbackState === MediaPlayer.PlayingState) {
+                    mediaPlayer.pause();
+                } else {
+                    if (mediaPlayer.playbackState === MediaPlayer.StoppedState) {
+                        mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
+                    } else mediaPlayer.play();
                 }
             }
-
         }
 
-        Image {
-            id: image3
+        CutieButton {
+            id: next
             width: 66
             height: 60
-            source: (Atmosphere.variant == "dark") ? "/icons/icon-m-next.svg" : "/icons_black/icon-m-next.svg"
             anchors.leftMargin: 20
-            anchors.left: image2.right
-            fillMode: Image.PreserveAspectFit
-            sourceSize.height: height
-            sourceSize.width: width
+            anchors.left: implay.right
+            icon.name: "media-skip-forward-symbolic"
+            icon.color: Atmosphere.textColor
 
-            MouseArea {
-                id: next
-
-                anchors.fill: image3
-                onClicked: {
-                    if (playlistView.currentIndex + 1 < cutieMusic.trackList.length)
-                        playlistView.currentIndex++;
-                    else playlistView.currentIndex = 0;
-                    mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
-                }
+            onClicked: {
+                if (playlistView.currentIndex + 1 < cutieMusic.trackList.length)
+                    playlistView.currentIndex++;
+                else playlistView.currentIndex = 0;
+                mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
             }
-
         }
-
     }
 
     CutieSlider {

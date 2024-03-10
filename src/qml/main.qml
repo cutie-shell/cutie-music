@@ -84,36 +84,27 @@ CutieWindow {
 
             }
 
-            Image {
+            CutieButton {
                 id: miniPlay
                 y: 10
                 width: 55
                 height: 50
                 anchors.rightMargin: 10
                 anchors.right: parent.right
-                fillMode: Image.PreserveAspectFit
-                sourceSize.height: height
-                sourceSize.width: width
-		        source: (Atmosphere.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/icon-m-play.svg"
+                icon.name: "media-playback-start-symbolic"
+                icon.color: Atmosphere.textColor
                 z: 200
 
-                MouseArea {
-                    id: miniimplay
-
-                    anchors.fill: miniPlay
-                    onClicked: {
-                        if (mediaPlayer.playbackState === MediaPlayer.PlayingState) {
-                            mediaPlayer.pause();
-                        } else {
-                            if (mediaPlayer.playbackState === MediaPlayer.StoppedState) {
-                                mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
-                            } else mediaPlayer.play();
-                        }
+                onClicked: {
+                    if (mediaPlayer.playbackState === MediaPlayer.PlayingState) {
+                        mediaPlayer.pause();
+                    } else {
+                        if (mediaPlayer.playbackState === MediaPlayer.StoppedState) {
+                            mediaPlayer.source = cutieMusic.trackList[playlistView.currentIndex].path;
+                        } else mediaPlayer.play();
                     }
                 }
-
             }
-
         }
 
         MediaPlayer {
@@ -132,9 +123,9 @@ CutieWindow {
 
             onPlaybackStateChanged: {
                 if (playbackState == MediaPlayer.PlayingState) {
-                    miniPlay.source = Qt.binding(() => (Atmosphere.variant == "dark") ? "/icons/icon-m-pause.svg" : "/icons_black/icon-m-pause.svg");
+                    miniPlay.icon.name = "media-playback-pause-symbolic";
                 } else {
-                    miniPlay.source = Qt.binding(() => (Atmosphere.variant == "dark") ? "/icons/icon-m-play.svg" : "/icons_black/icon-m-play.svg");
+                    miniPlay.icon.name = "media-playback-start-symbolic";
                 }
             }
             
