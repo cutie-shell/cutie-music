@@ -1,5 +1,4 @@
 import Cutie
-import Qt.labs.folderlistmodel
 import Qt5Compat.GraphicalEffects
 import QtMultimedia
 import QtQuick
