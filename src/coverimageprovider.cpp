@@ -1,13 +1,26 @@
 #include "coverimageprovider.h"
+#include <QCache>
+#include <QDebug>
+#include <QFutureWatcher>
+#include <QMutex>
+#include <QMutexLocker>
+#include <QQuickImageResponse>
+#include <QQuickTextureFactory>
+#include <QtConcurrent/QtConcurrentRun>
 
-CoverImageProvider::CoverImageProvider()
-	: QQuickImageProvider(QQuickImageProvider::Image)
-{
-}
+QCache<QString, QImage> imageCache(32 * 1024 * 1024);
+QMutex imageCacheMutex;
 
-QImage CoverImageProvider::requestImage(const QString &id, QSize *size,
-					const QSize &requestedSize)
+static QImage loadCoverImage(const QString &id, const QSize &requestedSize)
 {
+	const QString cacheKey = id + QString::number(requestedSize.width())
+		+ QLatin1Char('x') + QString::number(requestedSize.height());
+	{
+		QMutexLocker locker(&imageCacheMutex);
+		if (const QImage *cached = imageCache.object(cacheKey))
+			return *cached;
+	}
+
 	TagLib::FileRef file(id.toUtf8().constData());
 
 	QString fileType = id.right(3).toUpper();
@@ -45,8 +58,48 @@ QImage CoverImageProvider::requestImage(const QString &id, QSize *size,
 		image = reader.read();
 	}
 
-	if (size)
-		*size = image.size();
+	if (!image.isNull()) {
+		QMutexLocker locker(&imageCacheMutex);
+		imageCache.insert(cacheKey, new QImage(image),
+				  qMax(1, (int)image.sizeInBytes()));
+	}
 
 	return image;
+}
+
+class CoverImageResponse : public QQuickImageResponse
+{
+public:
+	CoverImageResponse(const QString &id, const QSize &requestedSize)
+	{
+		auto *watcher = new QFutureWatcher<QImage>(this);
+		connect(watcher, &QFutureWatcher<QImage>::finished, this, [this, watcher] {
+			m_image = watcher->result();
+			emit finished();
+			watcher->deleteLater();
+		});
+		watcher->setFuture(QtConcurrent::run(loadCoverImage, id, requestedSize));
+	}
+
+	QQuickTextureFactory *textureFactory() const override
+	{
+		return QQuickTextureFactory::textureFactoryForImage(m_image);
+	}
+
+	void cancel() override {}
+
+private:
+	QImage m_image;
+};
+CoverImageProvider::CoverImageProvider()
+	: QQuickAsyncImageProvider()
+{
+}
+
+QQuickImageResponse *CoverImageProvider::requestImageResponse(
+	const QString &id, const QSize &requestedSize)
+{
+	qDebug().noquote() << "CoverImageProvider::requestImage:" << id
+			   << "requestedSize:" << requestedSize;
+	return new CoverImageResponse(id, requestedSize);
 }

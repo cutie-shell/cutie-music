@@ -29,7 +29,7 @@ CutieWindow {
     title: qsTr("Music")
 
     Component.onCompleted: {
-         if (audioFileArgument &&  audioFileArgument.trim().length > 4) {
+         if (audioFileArgument && audioFileArgument.trim().length > 4) {
             cutieMusic.addExternalTrack(audioFileArgument);
             mediaPlayer.source = cutieMusic.trackList[0].path;
         }
@@ -210,22 +210,11 @@ CutieWindow {
                         width: parent.width // Fixes the invisible text
                     }
                       
-                    CutieTextField {
+                    CutieSearchBox {
                             id: searchField
                             placeholderText: qsTr("Search songs...")
                             width: parent.width - 30
                             anchors.horizontalCenter: parent.horizontalCenter
-
-                            height: 38
-                            leftPadding: 16
-                            rightPadding: 16
-                            verticalAlignment: Text.AlignVCenter
-
-                            background: Rectangle {
-                                radius: searchField.height / 2
-                                color: Atmosphere.primaryAlphaColor
-                            }
-
                             onAccepted: view.searchQuery = text
                     }
 
@@ -242,8 +231,8 @@ CutieWindow {
             CutieListItem {
                 highlighted: playlistView.currentIndex == index
                 icon.source: modelData.path.toString().replace("file:///", "image://cover/")
-                icon.width: 40
-                icon.height: 40
+                icon.width: 20
+                icon.height: 20
                 iconOverlay: false
 
                 wrapMode: Text.NoWrap
