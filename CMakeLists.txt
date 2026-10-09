@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
-project(cutie-music VERSION 1.3 LANGUAGES CXX)
+project(cutie-music VERSION 1.4 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Quick Qml LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Core Quick Qml Concurrent LinguistTools)
 find_package(PkgConfig REQUIRED)
 
 qt_standard_project_setup()
@@ -30,7 +30,7 @@ target_compile_options(cutie-music PUBLIC ${TAGLIB_CFLAGS_OTHER})
 
 target_include_directories(cutie-music PUBLIC src ${TAGLIB_INCLUDE_DIRS})
 
-target_link_libraries(cutie-music PUBLIC Qt::Core Qt::Quick Qt::Qml ${TAGLIB_LIBRARIES})
+target_link_libraries(cutie-music PUBLIC Qt::Core Qt::Quick Qt::Qml Qt::Concurrent ${TAGLIB_LIBRARIES})
 
 install(TARGETS cutie-music RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
 install(FILES cutie-music.desktop DESTINATION "${CMAKE_INSTALL_DATADIR}/applications")

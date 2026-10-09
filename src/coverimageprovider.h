@@ -6,14 +6,14 @@
 #include <xiphcomment.h>
 #include <vorbisfile.h>
 #include <mpegfile.h>
-#include <QQuickImageProvider>
+#include <QQuickAsyncImageProvider>
 #include <QImage>
 #include <QImageReader>
 
-class CoverImageProvider : public QQuickImageProvider {
+class CoverImageProvider : public QQuickAsyncImageProvider {
     public:
 	CoverImageProvider();
 
-	QImage requestImage(const QString &id, QSize *size,
-			    const QSize &requestedSize) override;
+	QQuickImageResponse *requestImageResponse(const QString &id,
+						 const QSize &requestedSize) override;
 };
